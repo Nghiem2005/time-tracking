@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const Employee = require("../models/Employee");
 
+// Secret key lấy từ biến môi trường (file .env) để bảo mật
+const JWT_SECRET = process.env.JWT_SECRET || "GDU_Secret_Key_2026";
+
 const protect = async (req, res, next) => {
   let token;
 
@@ -22,8 +25,8 @@ const protect = async (req, res, next) => {
   }
 
   try {
-    // 2. Giải mã token để lấy ID của nhân viên (sử dụng đúng Secret Key đã tạo lúc nãy)
-    const decoded = jwt.verify(token, "GDU_Secret_Key_2026");
+    // 2. Giải mã token để lấy ID của nhân viên (sử dụng Secret Key từ biến môi trường)
+    const decoded = jwt.verify(token, JWT_SECRET);
 
     // 3. Tìm nhân viên trong Database và gắn thông tin vào req.employee
     req.employee = await Employee.findById(decoded.id);

@@ -1,9 +1,12 @@
 const Employee = require("../models/Employee");
 const jwt = require("jsonwebtoken");
 
+// Secret key lấy từ biến môi trường (file .env) để bảo mật
+const JWT_SECRET = process.env.JWT_SECRET || "GDU_Secret_Key_2026";
+
 // Hàm hỗ trợ tạo Token (dùng chung với authController)
 const generateToken = (id) => {
-  return jwt.sign({ id }, "GDU_Secret_Key_2026", {
+  return jwt.sign({ id }, JWT_SECRET, {
     expiresIn: "30d",
   });
 };
