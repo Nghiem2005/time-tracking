@@ -1,0 +1,20 @@
+# Cấu hình deploy tự động cho Render
+# Render sẽ tự đọc file này khi deploy từ GitHub
+# Tham khảo: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: time-tracking-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        value: GDU_Secret_Key_2026
+      # MONGO_URI chứa mật khẩu nên KHÔNG lưu trong Git.
+      # Bạn phải nhập thủ công trên Render (Settings -> Environment).
+      - key: MONGO_URI
+        sync: false
+      - key: PORT
+        value: 3000
